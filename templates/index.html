@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/static/angular-1.6.8/angular.min.js"></script>
+    <script src="/static/Highcharts-6.0.3/code/highcharts.js"></script>
+    <script src="/static/Highcharts-6.0.3/code/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+
 </head>
 
 <body>
@@ -17,6 +21,7 @@
                 <button type="submit" class="btn btn-primary" ng-click="search()" id="onSub">提交</button>
             </form>
     </div>
+    <div id="map" style="min-width:400px;height:400px"></div>
     
     <script>
         var app = angular.module('venus-app', []);
@@ -28,30 +33,30 @@
                     url: "{{site}}/kchart/code/" + $scope.code
                 }).then(function successCallback(response) {
                     console.log(response);
-                    // var data = response.data;
-                    // Highcharts.stockChart('container', {
-                    //     rangeSelector: {
-                    //         selected: 2
-                    //     },
-                    //     title: {
-                    //         text: '平安银行历史股价'
-                    //     },
-                    //     plotOptions: {
-                    //         series: {
-                    //             showInLegend: true
-                    //         }
-                    //     },
-                    //     tooltip: {
-                    //         split: false,
-                    //         shared: true
-                    //     },
-                    //     series: [{
-                    //         // type: 'line',
-                    //         id: '000001',
-                    //         name: '平安银行',
-                    //         data: data
-                    //     }]
-                    // });
+                    var data = response.data;
+                    Highcharts.stockChart('map', {
+                        rangeSelector: {
+                            selected: 2
+                        },
+                        title: {
+                            text: '平安银行历史股价'
+                        },
+                        plotOptions: {
+                            series: {
+                                showInLegend: true
+                            }
+                        },
+                        tooltip: {
+                            split: false,
+                            shared: true
+                        },
+                        series: [{
+                            // type: 'line',
+                            id: '000001',
+                            name: '平安银行',
+                            data: data
+                        }]
+                    });
                 }, function errorCallback(response) {
 			        // 请求失败执行代码
                     console.log(response);
