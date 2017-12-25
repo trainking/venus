@@ -20,10 +20,42 @@
     
     <script>
         var app = angular.module('venus-app', []);
-        app.controller('indexCtrl', function($scope) {
+        app.controller('indexCtrl', function($scope, $http) {
             // 执行搜索分析
             $scope.search = function() {
-                alert($scope.code);
+                $http({
+                    method: "GET",
+                    url: "{{site}}/kchart/code/" + $scope.code
+                }).then(function successCallback(response) {
+                    console.log(response);
+                    // var data = response.data;
+                    // Highcharts.stockChart('container', {
+                    //     rangeSelector: {
+                    //         selected: 2
+                    //     },
+                    //     title: {
+                    //         text: '平安银行历史股价'
+                    //     },
+                    //     plotOptions: {
+                    //         series: {
+                    //             showInLegend: true
+                    //         }
+                    //     },
+                    //     tooltip: {
+                    //         split: false,
+                    //         shared: true
+                    //     },
+                    //     series: [{
+                    //         // type: 'line',
+                    //         id: '000001',
+                    //         name: '平安银行',
+                    //         data: data
+                    //     }]
+                    // });
+                }, function errorCallback(response) {
+			        // 请求失败执行代码
+                    console.log(response);
+	            });
             };
         });
     </script>
