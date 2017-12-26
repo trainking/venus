@@ -1,0 +1,9 @@
+{
+  "requires": true,
+  "lockfileVersion": 1,
+  "dependencies": {
+    "angular": "^1.6.8",
+    "highcharts": "^6.0.4",
+    "highcharts-ng": "^1.2.0"
+  }
+}
