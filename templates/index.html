@@ -3,28 +3,30 @@
     <title>证券分析系统</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="/static/angular-1.6.8/angular.min.js"></script>
-    <script src="/static/Highcharts-6.0.3/code/highcharts.js"></script>
-    <script src="/static/Highcharts-6.0.3/code/modules/exporting.js"></script>
-    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    <script src="/static/node_modules/angular/angular.min.js"></script>
+    <script src="/static/node_modules/highcharts/highcharts.js"></script>
+    <script src="/static/node_modules/highcharts/modules/exporting.js"></script>
+    <script src="/static/node_modules/highcharts-ng/dist/highcharts-ng.min.js"></script>
 
 </head>
 
 <body>
     <div class="container" ng-app="venus-app">
+        <div ng-controller="indexCtrl">
         <h2>上证/深证 股票分析</h2>
-            <form class="form-inline" ng-controller="indexCtrl">
+            <form class="form-inline" >
                 <div class="form-group">
                   <label class="sr-only" for="exampleInputAmount">股票代码/60xxxx/00xxxx</label>
                   <input type="text" class="form-control" ng-model="code" id="exampleInputAmount" placeholder="股票代码/60xxxx/00xxxx">
                 </div>
                 <button type="submit" class="btn btn-primary" ng-click="search()" id="onSub">提交</button>
             </form>
+            <highchart id="chart1" config="chartConfig"></highchart>
+            </highchart>
+        </div>
     </div>
-    <div id="map" style="min-width:400px;height:400px"></div>
-    
     <script>
-        var app = angular.module('venus-app', []);
+        var app = angular.module('venus-app', ["highcharts-ng"]);
         app.controller('indexCtrl', function($scope, $http) {
             // 执行搜索分析
             $scope.search = function() {
@@ -34,12 +36,18 @@
                 }).then(function successCallback(response) {
                     console.log(response);
                     var data = response.data;
-                    Highcharts.stockChart('map', {
+                    $scope.chartConfig = {
+                        chartType: "stock",
+                        chart: {
+                            // type: 'map',
+                            height: 500,
+                            width: 500
+                        },
                         rangeSelector: {
                             selected: 2
                         },
                         title: {
-                            text: '平安银行历史股价'
+                            text: "平安银行历史股价"
                         },
                         plotOptions: {
                             series: {
@@ -56,7 +64,7 @@
                             name: '平安银行',
                             data: data
                         }]
-                    });
+                    };
                 }, function errorCallback(response) {
 			        // 请求失败执行代码
                     console.log(response);

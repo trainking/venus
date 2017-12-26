@@ -19,7 +19,7 @@ def kchart(code):
     data = ts.get_hist_data(code)
     r = data.close  # 获取收盘价的Series
     return json.dumps([
-            (time.mktime(time.strptime(x, "%Y-%m-%d")),r[x]) for x in r.index
+            (x,r[x]) for x in r.index
         ])
 
 
