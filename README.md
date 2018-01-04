@@ -16,3 +16,10 @@ Flask:
 ```
 pip install Falask
 ```
+
+npm:
+
+```
+cd static/
+npm install 
+```
