@@ -31,8 +31,22 @@
         app.controller('indexCtrl', function($scope, $http) {
             $scope.chart_show = false;
             $scope.chartConfig = {};
+            $scope.name = "平安银行";
             // 执行搜索分析
             $scope.search = function() {
+
+                // 获取基本信息
+                $http({
+                    method: "GET",
+                    url: "{{site}}/data/base/" + $scope.code
+                }).then(function successCallback(response) {
+                    var data = response.data;
+                    $scope.name = data.name;
+                }, function errorCallback(response) {
+                    console.log(response);
+                });
+
+                // 获取K线图数据
                 $http({
                     method: "GET",
                     url: "{{site}}/kchart/code/" + $scope.code
@@ -50,7 +64,7 @@
                             selected: 2
                         },
                         title: {
-                            text: "平安银行历史股价"
+                            text: $scope.name + "历史股价"
                         },
                         plotOptions: {
                             series: {
@@ -63,8 +77,8 @@
                         },
                         series: [{
                             // type: 'line',
-                            id: '000001',
-                            name: '平安银行',
+                            id: $scope.code,
+                            name: $scope.name,
                             data: data
                         }]
                     };

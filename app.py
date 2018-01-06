@@ -16,11 +16,24 @@ def index():
 
 @app.route("/kchart/code/<code>")
 def kchart(code):
+    """
+        K线图
+    """
     data = ts.get_hist_data(code)
     r = data.close  # 获取收盘价的Series
     return json.dumps([
             (x,r[x]) for x in r.index
         ])
+
+@app.route("/data/base/<code>")
+def baseData(code):
+    """
+        基本面数据
+    """
+    data = ts.get_stock_basics()
+    _item = dict(data.loc[code])
+
+    return json.dumps(_item)
 
 
 if __name__ == '__main__':
