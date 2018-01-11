@@ -1,8 +1,8 @@
 var app = angular.module('venus-app', ["highcharts-ng"]);
 app.controller('indexCtrl', function($scope, $http) {
     $scope.chart_show = false;
+    $scope.name = "平安银行"; // 默认000001平安银行
     $scope.chartConfig = {};
-    $scope.name = "平安银行";
     // 执行搜索分析
     $scope.search = function() {
 
@@ -28,8 +28,8 @@ app.controller('indexCtrl', function($scope, $http) {
                 chartType: "stock",
                 chart: {
                     // type: 'map',
-                    height: 500,
-                    width: 500
+                    height: 1024,
+                    width: 1024
                 },
                 rangeSelector: {
                     selected: 2
