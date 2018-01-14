@@ -1,5 +1,7 @@
 #coding: utf-8
 
+import tushare as ts
+
 def k_chart_data(code):
     """
         根据code获取K线图数据
