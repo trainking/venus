@@ -5,6 +5,7 @@ from flask import render_template
 import json
 import tushare as ts
 import time
+from data import *
 
 app = Flask(__name__)
 
@@ -19,11 +20,7 @@ def kchart(code):
     """
         K线图
     """
-    data = ts.get_hist_data(code)
-    r = data.close  # 获取收盘价的Series
-    return json.dumps([
-            (x,r[x]) for x in r.index
-        ])
+    return json.dumps(base.k_chart_data(code))
 
 @app.route("/data/base/<code>")
 def baseData(code):
