@@ -27,8 +27,7 @@ def baseData(code):
     """
         基本面数据
     """
-    data = ts.get_stock_basics()
-    _item = dict(data.loc[code])
+    _item = base.info(code)
 
     return json.dumps(_item)
 
