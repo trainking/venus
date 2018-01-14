@@ -11,7 +11,7 @@ def k_chart_data(code):
             [] 股票收盘价数据
     """
     _data = ts.get_hist_data(code)
-    r = _data.close
+    r = _data.sort_index().close
     return [
             (x,r[x]) for x in r.index
         ]
